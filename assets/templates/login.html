@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+    <head></head>
+    <body>
+        <h1>Log In</h1>
+        <form action="/loginPost" method="POST">
+            <label for="email">Email Address:</label>
+            <input type="email" name="email" value="{{.User.Email}}"> <br>
+            <p>{{.UserAuth.Email}}</p>
+            <p>{{.UserAuth.EmailNotValid}}</p>
+            <label for="password">Password: </label>
+            <input type="password" name="password" value="{{.User.Password}}"><br>
+            <p>{{.UserAuth.Password}}</p>
+            <P>{{.UserAuth.PassNotMatched}}</P>
+            <input type="submit" value="Log In">
+        </form>
+
+        {{if .LoggedIn}}
+        <p>{{.UserAuth.Logout}}
+            <button>
+                <a href="/logout">Log Out</a>
+            </button>
+        </p>
+        {{end}}
+
+
+        <h2>Haven't signed up yet? 
+            <a href="/signup"> Sign Up!</a>
+        </h2><br>
+            <a href="/"> Back to Home </a>
+    </body>
+</html>

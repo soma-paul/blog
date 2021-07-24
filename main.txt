@@ -1,0 +1,60 @@
+/*
+type User struct {
+	FirstName string
+	LastName  string
+	Username  string
+	Email     string
+	CreatedOn time.Time
+}
+
+var templates *template.Template
+
+func dbConn() *sql.DB {
+	dbInfo := fmt.Sprintf("user=%s password=%s dbname=%s sslmode=disable", DB_USER, DB_PASSWORD, DB_NAME)
+	db, err := sql.Open(DB_DRIVER, dbInfo)
+	checkError("database connection error:", err)
+	fmt.Println("database connection is successful!")
+	return db
+}
+*/
+
+/*
+func indexHandler(w http.ResponseWriter, r *http.Request) {
+	db := dbConn()
+	defer db.Close()
+	fmt.Println("hello!")
+	templates.ExecuteTemplate(w, "index.html", nil)
+}
+
+func signupGetHandler(w http.ResponseWriter, r *http.Request) {
+	fmt.Println("signup")
+	templates.ExecuteTemplate(w, "signup.html", nil)
+}
+
+func signupPostHandler(w http.ResponseWriter, r *http.Request) {
+	fmt.Println("signup post")
+	var user User
+	//r.ParseForm()
+	user.FirstName = r.PostFormValue("firstname")
+	user.LastName = r.PostFormValue("lastname")
+	user.Username = r.PostFormValue("username")
+	user.Email = r.PostFormValue("email")
+	id := insert(user)
+	fmt.Println("data insertion is done successfully for id = ", id)
+	http.Redirect(w, r, "/signup", 302)
+}
+
+func insert(usr User) int64 {
+	var id int64
+	stmnt := fmt.Sprintf("INSERT INTO %s(firstname, lastname, username, email, created_on) VALUES($1, $2, $3, $4, NOW()) RETURNING id", TABLE_NAME)
+	db := dbConn()
+	err := db.QueryRow(stmnt, usr.FirstName, usr.LastName, usr.Username, usr.Email).Scan(&id)
+	checkError("database insertion error: ", err)
+	return id
+}
+
+func loginHandler(w http.ResponseWriter, r *http.Request) {
+	fmt.Println("login")
+	templates.ExecuteTemplate(w, "login.html", nil)
+}
+*/
