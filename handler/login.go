@@ -37,19 +37,19 @@ func (s *Server) loginGetHandler(w http.ResponseWriter, r *http.Request) {
 		data.LoggedIn = true
 	}
 
-	err = s.loadLogin(w, r, data)
+	err = s.loadLogin(w, data)
 	CheckError("error loding get log in form ", err)
 
 }
 
 func (s *Server) loginPostHandler(w http.ResponseWriter, r *http.Request) {
-	//fmt.Println("login post")
 	var usrForm storage.Users
 	var data LoginTempData
 	r.ParseForm()
 	err := s.decoder.Decode(&usrForm, r.PostForm)
 	CheckError("error decoding log in form: ", err)
 
+	//**********************Validate Login Form********************************************
 	varErr := map[string]string{}
 	validationErr := ValidateLogin(usrForm)
 	if validationErr != nil {
@@ -60,13 +60,13 @@ func (s *Server) loginPostHandler(w http.ResponseWriter, r *http.Request) {
 					varErr[key] = value.Error()
 				}
 			}
-			//data.UserAuth = varErr
 		}
 
 	}
 	var passwordErr error
 	userDB := s.store.UserAuth(usrForm.Email) //retrieves id, username, password for given email
 
+	//check if entered email is registered
 	if userDB.ID == 0 {
 		varErr["EmailNotValid"] = "this email is not valid"
 
@@ -85,7 +85,6 @@ func (s *Server) loginPostHandler(w http.ResponseWriter, r *http.Request) {
 	if len(varErr) == 0 {
 		//create session
 		newSession, er := s.session.Get(r, "user-session")
-		fmt.Printf("priniting session: %T, %+v", newSession, newSession)
 		CheckError("error creating session", er)
 
 		//set values like username and userid depending on the user
@@ -95,18 +94,22 @@ func (s *Server) loginPostHandler(w http.ResponseWriter, r *http.Request) {
 		err = newSession.Save(r, w)
 		CheckError("error saving session: ", err)
 		data.LoginSuccess = true
+		//redirect to homepage if logged in successfully
+		http.Redirect(w, r, "/", 302)
+
 		usrForm = storage.Users{}
+
 	}
 
 	data.User = usrForm
 	data.UserAuth = varErr
 
-	err = s.loadLogin(w, r, data)
+	err = s.loadLogin(w, data)
 	CheckError("error loading post log in form ", err)
 
 }
 
-func (s *Server) loadLogin(w http.ResponseWriter, r *http.Request, data LoginTempData) error {
+func (s *Server) loadLogin(w http.ResponseWriter, data LoginTempData) error {
 	err := s.templates.ExecuteTemplate(w, "login.html", data)
 	return err
 }

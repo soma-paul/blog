@@ -3,6 +3,17 @@
     <head></head>
     <body>
         <h1>Show Article-1</h1>
-        <p>this is page is to show one article</p>
+        <br>
+
+        <div>
+            {{range .}}
+            <h1>{{.Title}}</h1>
+            <p>{{.Description}}</p>
+            <h3>{{.Author }} {{.CreatedAt}}</h3>
+            <form action="/show-article/{{.ID}}" method="GET">
+                <input type="submit" value="View Full">
+            </form>
+            {{end}}
+        </div>
     </body>
 </html>

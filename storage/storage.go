@@ -24,3 +24,13 @@ type SignupUser struct {
 	Email     string `schema:"email" db:"email"`
 	Password  string `schema:"password" db:"password"`
 }
+
+type Articles struct {
+	ID          int32     `db:"id"`
+	Title       string    `schema:"title" db:"title"`
+	Description string    `schema:"description" db:"description"`
+	Author      string    `db:"username"`
+	UserID      int32     `db:"uid"`
+	CreatedAt   time.Time `db:"created_at"`
+	UpdatedAt   time.Time `db:"updated_at"`
+}

@@ -2,7 +2,6 @@ package handler
 
 import (
 	"Blog/storage/postgres"
-	"log"
 	"text/template"
 
 	"github.com/Masterminds/sprig"
@@ -10,12 +9,6 @@ import (
 	"github.com/gorilla/schema"
 	"github.com/gorilla/sessions"
 )
-
-func CheckError(msg string, err error) {
-	if err != nil {
-		log.Fatal(msg, err.Error())
-	}
-}
 
 func CheckEmptyString(str string) bool {
 	var fl bool
@@ -58,7 +51,10 @@ func NewServer(store *postgres.StoreDB, decoder *schema.Decoder, session *sessio
 	r.HandleFunc("/login", s.loginGetHandler).Methods("GET")
 	r.HandleFunc("/loginPost", s.loginPostHandler).Methods("POST")
 	r.HandleFunc("/create-article", s.createArticle).Methods("GET")
+	r.HandleFunc("/create-article", s.createArticlePost).Methods("POST")
+	r.HandleFunc("/show-article/{id}", s.showArticleByID).Methods("GET")
 	r.HandleFunc("/show-article", s.showArticle).Methods("GET")
+
 	r.HandleFunc("/logout", s.logOut).Methods("GET")
 	return r, nil
 
