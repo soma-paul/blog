@@ -2,6 +2,15 @@
 <html>
     <head></head>
     <body>
+        {{if ne .Username ""}}
+        <h3>Hello! {{.Username}}
+            <p>{{.UserAuth.Logout}}</p>
+            <button>
+                <a href="/logout">Log Out</a>
+            </button>
+        </h3>
+        
+        {{end}}
         <h1>Log In</h1>
         <form action="/loginPost" method="POST">
             <label for="email">Email Address:</label>
@@ -15,13 +24,9 @@
             <input type="submit" value="Log In">
         </form>
 
-        {{if .LoggedIn}}
-        <p>{{.UserAuth.Logout}}
-            <button>
-                <a href="/logout">Log Out</a>
-            </button>
-        </p>
-        {{end}}
+        
+        
+        
 
 
         <h2>Haven't signed up yet? 

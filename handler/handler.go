@@ -10,16 +10,6 @@ import (
 	"github.com/gorilla/sessions"
 )
 
-func CheckEmptyString(str string) bool {
-	var fl bool
-	if len(str) != 0 {
-		fl = true
-	} else {
-		fl = false
-	}
-	return fl
-}
-
 type (
 	Server struct {
 		templates *template.Template
@@ -52,9 +42,9 @@ func NewServer(store *postgres.StoreDB, decoder *schema.Decoder, session *sessio
 	r.HandleFunc("/loginPost", s.loginPostHandler).Methods("POST")
 	r.HandleFunc("/create-article", s.createArticle).Methods("GET")
 	r.HandleFunc("/create-article", s.createArticlePost).Methods("POST")
-	r.HandleFunc("/show-article/{id}", s.showArticleByID).Methods("GET")
 	r.HandleFunc("/show-article", s.showArticle).Methods("GET")
-
+	r.HandleFunc("/show-article/{id}", s.showArticleByID).Methods("GET")
+	r.HandleFunc("/show-article/{id}", s.showArticleByIDPost).Methods("POST")
 	r.HandleFunc("/logout", s.logOut).Methods("GET")
 	return r, nil
 
@@ -71,15 +61,3 @@ func (s *Server) parseTemplates() error {
 	return nil
 
 }
-
-/*
-func reverse(str string) string {
-	n := len(str)
-	runes := make([]rune, n)
-	for _, rune := range str {
-		n--
-		runes[n] = rune
-	}
-	return string(runes[n:])
-}
-*/

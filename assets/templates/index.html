@@ -2,6 +2,17 @@
 <html>
     <head></head>
     <body>
+        {{if ne .Uname ""}}
+        <h3>Hello! {{.Uname}}</h3>
+        <button>
+            <a href="/logout">Log Out</a>
+        </button>
+        {{end}}
+        <div>
+            <a href="/show-article">Blog Articles</a>
+            <a href="/create-article">Create your own article</a>
+        </div>
+        
         <h1>Hello people!</h1>
         <h3><a href="/signup">Sign Up!</a></h3>
         <h3>already signed up? <a href="/login">Log In!</a></h3>
