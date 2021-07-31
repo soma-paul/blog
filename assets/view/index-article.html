@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <script type="text/javascript">
+            let url=(window.location.href).split("/")
+            let id= url[4].substr(0, url.length -1 )
+            console.log(url)
+            
+            document.getElementById("votes").action="/show-article" + url[4]
+        </script>
+    </head>
+    <body>
+
+        {{if ne .LoggedUsername ""}}
+        <p>Hello {{.LoggedUsername}}</p>
+        <button>
+            <a href="/logout">Log Out</a>
+        </button>
+        {{end}}
+
+        <div>
+            <a href="/">Home</a>
+            <a href="/show-article">Articles</a>
+            <a href="/login">Log In</a>
+        </div>
+        
+        <p>this is the full article</p>
+        {{if .CheckAuthor}}
+        <!--only show this button only for those who matches the author/ cretatedBy and the username from session-->
+        <form action="/update-article/{{.Article.ID}}" method="GET">
+            <input type="submit" value="Update">
+        </form>
+        {{end}}
+         
+        <h1>{{.Article.Title}}</h1><br>
+        <p>Created by: <h3>{{.Article.Author}}</h3></p>
+        <p>{{.Article.Description}}</p>
+
+        
+        
+        
+
+        <form action="" method="GET" id="votes">
+            <input type="submit" name="upvote" value="UP vote{{.Upvote}}">
+            <input type="submit" name="upvote" value="DOWN vote{{.Downvote}}">
+        </form>
+        
+       
+        
+        
+        
+        
+    </body>
+
+
+</html>

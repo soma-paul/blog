@@ -63,6 +63,5 @@ func (s *Server) DeleteSession(w http.ResponseWriter, r *http.Request) error {
 	delete(session.Values, "isAdmin")
 	delete(session.Values, "logged_in")
 	err := session.Save(r, w)
-	//fmt.Printf("printing session with values after logout %+v %+v", session, session.Values)
 	return err
 }

@@ -1,0 +1,17 @@
+{
+  "name": "netbank",
+  "version": "1.0.0",
+  "description": "",
+  "main": "tailwind.config.js",
+  "dependencies": {
+    "autoprefixer": "^10.2.6",
+    "postcss": "^8.3.5",
+    "tailwindcss": "^2.2.4"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "dev": "npx tailwindcss -i ./view/css/style.css -o ./view/css/app.css"
+  },
+  "author": "",
+  "license": "ISC"
+}

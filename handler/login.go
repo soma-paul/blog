@@ -48,18 +48,6 @@ func (s *Server) loginGetHandler(w http.ResponseWriter, r *http.Request) {
 		data.Username = u
 	}
 
-	fmt.Printf("*********************data: %+v", data)
-
-	/*
-		newSession, err := s.session.Get(r, "user-session")
-		CheckError("error getting session from login GET ", err)
-		if len(newSession.Values) > 0 {
-			data.UserAuth = map[string]string{}
-			data.UserAuth["Logout"] = "you are already logged in. "
-			data.LoggedIn = true
-		}
-	*/
-
 	err := s.loadLogin(w, data)
 	CheckError("error loding get log in form ", err)
 
@@ -75,19 +63,7 @@ func (s *Server) loginPostHandler(w http.ResponseWriter, r *http.Request) {
 	//**********************Validate Login Form********************************************
 	data.UserAuth = map[string]string{}    //initializing map
 	data.UserAuth = ValidateLogin(usrForm) //validating log in form
-	/*
-		if validationErr != nil {
-			if e, ok := validationErr.(validation.Errors); ok {
-				if len(e) > 0 {
 
-					for key, value := range e {
-						varErr[key] = value.Error()
-					}
-				}
-			}
-
-		}
-	*/
 	var passwordErr error
 	userDB := s.store.UserAuth(usrForm.Email) //retrieves id, username, password for given email
 
@@ -106,7 +82,6 @@ func (s *Server) loginPostHandler(w http.ResponseWriter, r *http.Request) {
 		}
 
 	}
-	//fmt.Printf("password err: %v, validation error: %v", passwordErr, varErr)
 	if len(data.UserAuth) == 0 {
 		//create session
 		err = s.CreateSession(w, r, userDB)

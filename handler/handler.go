@@ -44,7 +44,11 @@ func NewServer(store *postgres.StoreDB, decoder *schema.Decoder, session *sessio
 	r.HandleFunc("/create-article", s.createArticlePost).Methods("POST")
 	r.HandleFunc("/show-article", s.showArticle).Methods("GET")
 	r.HandleFunc("/show-article/{id}", s.showArticleByID).Methods("GET")
-	r.HandleFunc("/show-article/{id}", s.showArticleByIDPost).Methods("POST")
+	r.HandleFunc("/show-article/{id}", s.showArticleByID).Methods("POST")
+
+	r.HandleFunc("/update-article/{id}", s.updateArticleGet).Methods("GET")
+	r.HandleFunc("/update-article/{id}", s.updateArticlePost).Methods("POST")
+
 	r.HandleFunc("/logout", s.logOut).Methods("GET")
 	return r, nil
 

@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+    <head>
+
+    </head>
+
+    <body>
+        <div>
+            <a href="/">Home</a>
+            <a href="/show-article">Articles</a>
+            <a href="/create-article">Create new article</a>
+        </div>
+
+        {{if ne .LoggedUsername ""}}
+        <p>Hello {{.LoggedUsername}}</p>
+        <button>
+            <a href="/logout">Log Out </a>
+        </button>
+        {{end}}
+        
+        <h1>Update article!</h1>
+        <p>this page is to Update article</p>
+
+        <form action="/update-article/{{.Article.ID}}" method="POST">
+            <label for="title">Title</label>
+            <input type="text" name="title" value="{{.Article.Title}}"><br><br>
+
+            <label for="description">Description</label>
+            <textarea name="description"  cols="30" rows="10">{{.Article.Description}}</textarea>
+
+            <input type="submit" value="Update">
+        </form>
+    </body>
+</html>

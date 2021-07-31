@@ -2,6 +2,7 @@ package postgres
 
 import (
 	"Blog/storage"
+	"fmt"
 	"log"
 )
 
@@ -11,7 +12,9 @@ const (
 	createAnArticle = `INSERT INTO articles VALUES(DEFAULT, :title, :description,  :uid,:username, now(), now())
 	RETURNING id`
 
-	getAnArticle = `SELECT * FROM articles WHERE id=$1`
+	getAnArticle = `SELECT id,title, description, uid,username,created_at FROM articles WHERE id=$1`
+
+	UpdateAnArticle = `UPDATE articles SET title=:title, description=:description WHERE id=:id`
 )
 
 func (s *StoreDB) CreateArticle(data storage.Articles) (int32, error) {
@@ -27,18 +30,22 @@ func (s *StoreDB) CreateArticle(data storage.Articles) (int32, error) {
 
 func (s *StoreDB) ShowAllArticles() ([]storage.Articles, error) {
 	var articles []storage.Articles
-
-	//stmnt, err:=s.Db.PrepareNamed(getAllArticles)
 	err := s.Db.Select(&articles, getAllArticles)
 
 	return articles, err
 
 }
 
-func (s *StoreDB) ShowIndexedArticle(id int32) (storage.Articles, error) {
+func (s *StoreDB) GetIndexedArticle(id int32) (storage.Articles, error) {
 	var article storage.Articles
 	err := s.Db.Get(&article, getAnArticle, id)
 
 	return article, err
 
+}
+
+func (s *StoreDB) UpdateIndexedArticle(data storage.Articles) error {
+	result, err := s.Db.NamedExec(UpdateAnArticle, data)
+	fmt.Printf("prinint db updating result: %T %+v", result, result)
+	return err
 }

@@ -1,0 +1,18 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+@layer components {
+    .row {
+        @apply flex flex-wrap w-row -mx-4;
+    }
+}
+
+.login{
+    background-image: url(/assets/view/images/signup-bg.jpg);
+}
+
+.input{
+    border-radius: 4 rem;
+}
