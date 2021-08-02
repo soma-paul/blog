@@ -30,6 +30,7 @@ func (s *Server) showArticle(w http.ResponseWriter, r *http.Request) {
 	CheckError("error for getting all articles from database ", err)
 
 	data.Articles = AllArticles
+
 	err = s.templates.ExecuteTemplate(w, "show-article.html", data)
 	CheckError("error executing show-article template", err)
 }

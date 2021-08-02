@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" href="/static/view/css/app.css">
+    </head>
+    <body>
+        <section class="w-full px-4 mx-auto border-2 rounded-xl overflow-hidden bg-white">
+            <div class="container mx-auto">
+                <div class="row  -ml-4 min-h-screen">
+                    <div class="w-full md:w-1/2 px-4">  <!--this column contains log in form-->
+                        <div class="row -ml-4 py-16  bg-yellow-50 align-middle">
+                            <div class="w-full px-4 py-4 bg-blue-100 md:mx-10 border rounded">
+                                <div class="row">
+                                    <div class="w-full">
+                                        
+                                        <img src="/static/view/images/user3.png" alt="user icon" class="w-20 h-20 mx-auto">
+                                
+                                    </div>
+                                    <!-- <div class="w-5/12 h-full text-left ">
+                                        <div class="px-4 py-8">
+                                            <div class=" font-serif text-gray-700 text-left inline-block">
+                                                hello! username
+                                            </div>
+                                            
+                                            <div class=" text-right inline-block">
+                                                <button class=" text-blue-800 px-4 border rounded ">
+                                                    <a class="no-underline" href="/logout">Log Out</a>
+                                                </button>
+                                            </div>
+                                            
+                                            
+                                        </div>
+                                        
+                                    </div> -->
+                                </div> 
+                                <div class="row -ml-4"> <!--added row and column to form-->
+                                    <div class=" w-10/12 mx-auto md:w-full md:m-4 h-full text-center ">
+                                        <form action="/login" method="POST">
+                                            <div class="mt-4">
+                                                <label for="email" class="text-gray-500 mb-4">EMAIL</label>
+                                                <input class="w-full py-2 rounded border focus:outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base text-gray-700 px-3 leading-8 duration-200 ease-in-out" type="email" name="email" value="{{.User.Email}}" required>
+                                                <span class=" text-yellow-700 font-serif">{{.UserAuth.Email}}</span>
+                                                <span class=" text-yellow-700 font-serif">{{.UserAuth.EmailNotValid}}</span>
+                                            </div>
+                                            
+                                            <div class="mt-4">
+                                                <label for="password" class="text-gray-500 mb-4">Password</label>
+                                                <input class="w-full py-2 rounded border focus:outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base text-gray-700 px-3 leading-8 duration-200 ease-in-out" type="password" name="password" value="{{.User.Password}}" required>
+                                                <span class=" text-yellow-700 font-serif">{{.UserAuth.Password}}</span>
+                                                <span class=" text-yellow-700 font-serif">{{.UserAuth.PassNotMatched}}</span>
+                                            </div>
+        
+                                            <div class="mt-8">
+                                                <input class="w-full py-2 rounded border focus:outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base bg-blue-800 text-white font-bold" type="submit" value="Log In" >
+                                            </div>
+                                        </form>
+                                    </div>
+
+                                </div>                                  
+                                
+                                
+                                
+                                <div  class="pt-12 text-center">
+                                    Not registered yet?
+                                    <button>
+                                        <a class="text-blue-900 no-underline" href="/signup">Create an account</a>
+                                    </button> 
+                                    
+                                </div>
+
+                                <div class="text-center pt-4">
+                                    <button class="border rounded  bg-blue-300 p-2">
+                                        <a class="text-blue-900 no-underline" href="/">Go Home</a>
+                                    </button>
+                                </div> 
+
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="login md:w-1/2">  <!--this colum contains image-->
+
+                    </div>
+                </div>
+            </div>
+                
+
+            
+
+        </section>
+    </body>
+</html>

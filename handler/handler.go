@@ -2,6 +2,7 @@ package handler
 
 import (
 	"Blog/storage/postgres"
+	"net/http"
 	"text/template"
 
 	"github.com/Masterminds/sprig"
@@ -35,6 +36,8 @@ func NewServer(store *postgres.StoreDB, decoder *schema.Decoder, session *sessio
 	CheckError("template parsing error: ", err)
 
 	//define all routes here
+	r.PathPrefix("/static/").Handler(http.StripPrefix("/static/", http.FileServer(http.Dir("./assets/"))))
+
 	r.HandleFunc("/", s.indexHandler).Methods("GET")
 	r.HandleFunc("/signup", s.signupGetHandler).Methods("GET")
 	r.HandleFunc("/signupPost", s.signupPostHandler).Methods("POST")

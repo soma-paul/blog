@@ -32767,7 +32767,17 @@ video {
 }
 
 .login{
-  background-image: url(/assets/view/images/signup-bg.jpg);
+  background-image: url(../images/login1.jpg);
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position:center;
+}
+
+.signup{
+  background-image: url(../images/signup.jpg);
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position:center;
 }
 
 @media (min-width: 640px) {
@@ -191274,3 +191284,4 @@ video {
     transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
   }
 }
+

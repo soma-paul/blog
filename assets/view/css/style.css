@@ -10,9 +10,17 @@
 }
 
 .login{
-    background-image: url(/assets/view/images/signup-bg.jpg);
+    background-image: url(../images/login1.jpg);
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position:center;
 }
 
-.input{
-    border-radius: 4 rem;
+.signup{
+    background-image: url(../images/signup.jpg);
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position:center;
+    
 }
+

@@ -69,10 +69,10 @@ func (s *Server) signupPostHandler(w http.ResponseWriter, r *http.Request) {
 			}
 
 		}
-		if eID != 0 {
+		if eID == 0 {
 			varErr["DuplicateEmail"] = "Sorry! Email address already in use"
 		}
-		if uID != 0 {
+		if uID == 0 {
 			varErr["DuplicateUsername"] = "Sorry! Username is already in use, May be try another one?"
 		}
 		data.FormValidate = varErr
@@ -103,17 +103,6 @@ func (s *Server) signupPostHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func (s *Server) loadTemplate(w http.ResponseWriter, r *http.Request, data UserTempData) {
-	err := s.templates.ExecuteTemplate(w, "signup.html", data)
+	err := s.templates.ExecuteTemplate(w, "signupT.html", data)
 	CheckError("error parsing signup.html: ", err)
-}
-
-//custom function to call in template to reverse a string
-func reverse(str string) string {
-	n := len(str)
-	runes := make([]rune, n)
-	for _, rune := range str {
-		n--
-		runes[n] = rune
-	}
-	return string(runes[n:])
 }

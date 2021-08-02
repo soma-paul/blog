@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" href="/static/view/css/app.css">
+    </head>
+
+    <body>
+        <section class="w-full">
+            <div class="w-full px-4 mx-auto border-2 rounded-xl overflow-hidden">
+                <div class=" container mx-auto">
+                    <div class="row -ml-4">
+                        <div class="md:w-5/12 px-4 signup"> <!--side solid color and some onfo about blog-->
+    
+                        </div>
+                        <div class="md:w-7/12 w-full px-4 py-10 bg-blue-50">
+                            <div class="px-18 lg:px-32 py-6">
+                                <p class=" text-blue-700 font-bold text-4xl font-serif">Sign Up to Blog</p>
+                                <p class=" text-black font-serif py-4">Let's set up your profile so you can create your own article.</p>
+    
+                                <form action="/signupPost" method="POST">
+                                    <div class="mt-4">
+                                        <label for="firstname" class="text-gray-500 mb-4">First Name</label>
+                                        <input class="w-full rounded border focus:outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base text-gray-700 px-3 leading-8 duration-200 ease-in-out" type="text" name="firstname" value="{{.NewUser.FirstName}}">
+                                        <span class=" text-yellow-700 font-serif">{{.FormValidate.FirstName}}</span>
+                                    </div>
+                                    
+                                    <div class="mt-4">
+                                        <label for="lastname" class="text-gray-500 mb-4">Last Name</label>
+                                        <input class="w-full rounded border focus:outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base text-gray-700 px-3 leading-8 duration-200 ease-in-out" type="text" name="lastname" value="{{.NewUser.LastName}}">
+                                        <span class=" text-yellow-700 font-serif">{{.FormValidate.LastName}}</span>
+                                    </div>
+        
+                                    <div class="mt-4">
+                                        <label for="username" class="text-gray-500 mb-4">User Name</label>
+                                        <input class="w-full rounded border focus:outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base text-gray-700 px-3 leading-8 duration-200 ease-in-out" type="text" name="username" value="{{.NewUser.Username}}">
+                                        <span class=" text-yellow-700 font-serif">{{.FormValidate.Username}}</span>
+                                        <span class=" text-yellow-700 font-serif">{{.FormValidate.DuplicateUsername}}</span>
+                                    </div>
+        
+                                    <div class="mt-4">
+                                        <label for="email" class="text-gray-500 mb-4">EMAIL</label>
+                                        <input class="w-full rounded border focus:outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base text-gray-700 px-3 leading-8 duration-200 ease-in-out" type="email" name="email" value="{{.NewUser.Email}}">
+                                        <span class=" text-yellow-700 font-serif">{{.FormValidate.Email}}</span>
+                                        <span class=" text-yellow-700 font-serif">{{.FormValidate.DuplicateEmail}}</span>
+                                    </div>
+        
+                                    <div class="mt-4">
+                                        <label for="password" class="text-gray-500 mb-4">Password</label>
+                                        <input class="w-full rounded border focus:outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base text-gray-700 px-3 leading-8 duration-200 ease-in-out" type="password" name="password" value="{{.NewUser.Password}}">
+                                        <span class=" text-yellow-700 font-serif">{{.FormValidate.Password}}</span>
+                                    </div>
+        
+                                    <div class="mt-8">
+                                        <input class="w-full py-2 rounded border focus:outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base bg-blue-800 text-white font-bold" type="submit" value="Sign up" >
+                                    </div>
+                                </form>
+                            </div>
+    
+                            
+    
+                        </div>
+    
+                    </div>
+                </div>
+                
+            </div>
+
+        </section>
+    </body>
+</html>

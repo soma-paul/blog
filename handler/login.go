@@ -102,7 +102,7 @@ func (s *Server) loginPostHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func (s *Server) loadLogin(w http.ResponseWriter, data LoginTempData) error {
-	err := s.templates.ExecuteTemplate(w, "login.html", data)
+	err := s.templates.ExecuteTemplate(w, "loginT.html", data)
 	return err
 }
 
