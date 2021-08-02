@@ -21,7 +21,7 @@
             {{range .Articles}}
             <h1>{{.Title}}</h1>
             <p>{{.Description}}</p>
-            <h3>{{.Author }} {{.CreatedAt}}</h3>
+            <h3>{{.Author }} {{date "Mon, Jan 02, 2006" .CreatedAt}}</h3>
             <form action="/show-article/{{.ID}}" method="GET">
                 <input type="submit" value="View Full">
             </form>

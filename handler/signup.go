@@ -98,7 +98,7 @@ func (s *Server) signupPostHandler(w http.ResponseWriter, r *http.Request) {
 	s.loadTemplate(w, r, data)
 
 	//if validation err==nil && database job is done successfully, then execute this
-	http.Redirect(w, r, "/signup", 302)
+	http.Redirect(w, r, "/signup", http.StatusFound)
 
 }
 

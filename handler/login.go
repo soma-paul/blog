@@ -88,7 +88,7 @@ func (s *Server) loginPostHandler(w http.ResponseWriter, r *http.Request) {
 		CheckError("error creating and saving session. ", err)
 
 		//redirect to homepage if logged in successfully
-		http.Redirect(w, r, "/", 302)
+		http.Redirect(w, r, "/", http.StatusFound)
 
 		usrForm = storage.Users{}
 
@@ -110,5 +110,5 @@ func (s *Server) logOut(w http.ResponseWriter, r *http.Request) {
 	err := s.DeleteSession(w, r)
 	CheckError("Error for saving session after deleting values ", err)
 
-	http.Redirect(w, r, "/login", 307)
+	http.Redirect(w, r, "/login", http.StatusTemporaryRedirect)
 }

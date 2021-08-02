@@ -60,7 +60,7 @@ func (s *Server) showArticleByID(w http.ResponseWriter, r *http.Request) {
 	data.Article = articleByID
 	data.LoggedUsername = Username
 
-	s.templates.ExecuteTemplate(w, "index-article.html", data)
+	s.templates.ExecuteTemplate(w, "index-articleT.html", data)
 }
 
 //------------------------------For create article ---------------------------------------------
@@ -105,7 +105,7 @@ func (s *Server) createArticlePost(w http.ResponseWriter, r *http.Request) {
 	CheckError("error inserting article data", DBerr)
 
 	//data = ArticleTempData{}
-	http.Redirect(w, r, "/show-article", 302)
+	http.Redirect(w, r, "/show-article", http.StatusFound)
 
 }
 
@@ -185,6 +185,6 @@ func (s *Server) updateArticlePost(w http.ResponseWriter, r *http.Request) {
 	CheckError("error updating article data", DBerr)
 
 	redirectedUrl := "/show-article/" + string(articleID)
-	http.Redirect(w, r, redirectedUrl, 302)
+	http.Redirect(w, r, redirectedUrl, http.StatusFound)
 
 }

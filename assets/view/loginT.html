@@ -35,17 +35,17 @@
                                 </div> 
                                 <div class="row -ml-4"> <!--added row and column to form-->
                                     <div class=" w-10/12 mx-auto md:w-full md:m-4 h-full text-center ">
-                                        <form action="/login" method="POST">
+                                        <form action="/loginPost" method="POST">
                                             <div class="mt-4">
                                                 <label for="email" class="text-gray-500 mb-4">EMAIL</label>
-                                                <input class="w-full py-2 rounded border focus:outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base text-gray-700 px-3 leading-8 duration-200 ease-in-out" type="email" name="email" value="{{.User.Email}}" required>
+                                                <input class="w-full py-2 rounded border focus:outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base text-gray-700 px-3 leading-8 duration-200 ease-in-out" type="email" name="email" value="{{.User.Email}}">
                                                 <span class=" text-yellow-700 font-serif">{{.UserAuth.Email}}</span>
                                                 <span class=" text-yellow-700 font-serif">{{.UserAuth.EmailNotValid}}</span>
                                             </div>
                                             
                                             <div class="mt-4">
                                                 <label for="password" class="text-gray-500 mb-4">Password</label>
-                                                <input class="w-full py-2 rounded border focus:outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base text-gray-700 px-3 leading-8 duration-200 ease-in-out" type="password" name="password" value="{{.User.Password}}" required>
+                                                <input class="w-full py-2 rounded border focus:outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base text-gray-700 px-3 leading-8 duration-200 ease-in-out" type="password" name="password" value="{{.User.Password}}">
                                                 <span class=" text-yellow-700 font-serif">{{.UserAuth.Password}}</span>
                                                 <span class=" text-yellow-700 font-serif">{{.UserAuth.PassNotMatched}}</span>
                                             </div>
