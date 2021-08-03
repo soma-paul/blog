@@ -15,6 +15,7 @@ const (
 	getAnArticle = `SELECT id,title, description, uid,username,created_at FROM articles WHERE id=$1`
 
 	UpdateAnArticle = `UPDATE articles SET title=:title, description=:description WHERE id=:id`
+	DeleteAnArticle = `DELETE FROM articles WHERE id=$1`
 )
 
 func (s *StoreDB) CreateArticle(data storage.Articles) (int32, error) {
@@ -47,5 +48,10 @@ func (s *StoreDB) GetIndexedArticle(id int32) (storage.Articles, error) {
 func (s *StoreDB) UpdateIndexedArticle(data storage.Articles) error {
 	result, err := s.Db.NamedExec(UpdateAnArticle, data)
 	fmt.Printf("prinint db updating result: %T %+v", result, result)
+	return err
+}
+
+func (s *StoreDB) DeleteArticleByID(id int32) error {
+	_, err := s.Db.Query(DeleteAnArticle, id)
 	return err
 }

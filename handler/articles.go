@@ -188,3 +188,23 @@ func (s *Server) updateArticlePost(w http.ResponseWriter, r *http.Request) {
 	http.Redirect(w, r, redirectedUrl, http.StatusFound)
 
 }
+
+func (s *Server) deleteArticle(w http.ResponseWriter, r *http.Request) {
+	fmt.Println("Delete the article")
+	var article storage.Articles
+	//****** check if logged in and user matches the author
+	//get article from id
+	params := mux.Vars(r)
+	articleID := params["id"]
+
+	//convert articleID type to int32from string
+	ID := int32(ConvertStringtoInt(articleID))
+	article.ID = ID
+
+	//delete article from db using id
+	err := s.store.DeleteArticleByID(ID)
+	CheckError("error deleting row with given id: ", err)
+
+	http.Redirect(w, r, "/show-article", http.StatusFound)
+
+}

@@ -69,10 +69,10 @@ func (s *Server) signupPostHandler(w http.ResponseWriter, r *http.Request) {
 			}
 
 		}
-		if eID == 0 {
+		if eID != 0 {
 			varErr["DuplicateEmail"] = "Sorry! Email address already in use"
 		}
-		if uID == 0 {
+		if uID != 0 {
 			varErr["DuplicateUsername"] = "Sorry! Username is already in use, May be try another one?"
 		}
 		data.FormValidate = varErr

@@ -25,8 +25,11 @@
                     <div class="inline-block">
                         {{if .CheckAuthor}}
 <!--only show this button only for those who matches the author/ cretatedBy and the username from session-->
-                        <form action="/update-article/{{.Article.ID}}" method="GET">
+                        <form class="inline-block" action="/update-article/{{.Article.ID}}" method="GET">
                             <input class="p-1 border rounded-md bg-blue-200" type="submit" value="Update">
+                        </form>
+                        <form class="inline-block" action="/delete-article/{{.Article.ID}}" method="POST">
+                            <input class="p-1 border rounded-md bg-blue-200" type="submit" value="Delete">
                         </form>
                         {{end}}
                     </div>
