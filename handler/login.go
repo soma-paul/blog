@@ -13,7 +13,6 @@ import (
 type LoginTempData struct {
 	User     storage.Users
 	UserAuth map[string]string //registered email, not empty field, correct password check
-	Username string
 }
 
 func ValidateLogin(user storage.Users) map[string]string {
@@ -41,11 +40,10 @@ func (s *Server) loginGetHandler(w http.ResponseWriter, r *http.Request) {
 	data := LoginTempData{}
 
 	//check if logged in
-	u, loggedIn := s.CheckLoggedIn(r)
+	_, loggedIn := s.CheckLoggedIn(r)
 	if loggedIn {
 		data.UserAuth = map[string]string{}
 		data.UserAuth["Logout"] = "you are already logged in. "
-		data.Username = u
 	}
 
 	err := s.loadLogin(w, data)

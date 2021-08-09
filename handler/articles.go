@@ -8,19 +8,35 @@ import (
 	"github.com/gorilla/mux"
 )
 
-type ArticleTempData struct {
+type ShowArticleData struct {
 	Articles       []storage.Articles
+	LoggedUsername string
+}
+
+//data to show one article by id
+type ShowArticleByIdData struct {
 	Article        storage.Articles
-	Comments       map[string]string
-	Upvote         string
-	Downvote       string
 	LoggedUsername string
 	CheckAuthor    bool //true if the username and createdBy matches
 }
 
+type CreateArticleData struct {
+	ArticleAuth map[string]error
+	Article     storage.Articles
+}
+
+type UpdateArticleData struct {
+	ArticleAuth    map[string]error
+	Article        storage.Articles
+	CheckAuthor    bool
+	LoggedUsername string
+}
+
+//**************************************** show article handler **********************************************
+
 func (s *Server) showArticle(w http.ResponseWriter, r *http.Request) {
 	fmt.Println("show an article")
-	data := ArticleTempData{}
+	data := ShowArticleData{}
 	uname, ok := s.CheckLoggedIn(r)
 	if ok {
 		data.LoggedUsername = uname
@@ -37,7 +53,7 @@ func (s *Server) showArticle(w http.ResponseWriter, r *http.Request) {
 
 func (s *Server) showArticleByID(w http.ResponseWriter, r *http.Request) {
 	fmt.Println("this is full showArticleByID ")
-	var data ArticleTempData
+	var data ShowArticleByIdData
 
 	////******get article id from url params and get the article from db
 	params := mux.Vars(r)
@@ -63,11 +79,11 @@ func (s *Server) showArticleByID(w http.ResponseWriter, r *http.Request) {
 	s.templates.ExecuteTemplate(w, "index-articleT.html", data)
 }
 
-//------------------------------For create article ---------------------------------------------
+//**************************************** create article handler **********************************************
 
 func (s *Server) createArticle(w http.ResponseWriter, r *http.Request) {
 	fmt.Println("create an article")
-	data := ArticleTempData{}
+	//data := ArticleTempData{}
 
 	//check if logged in
 	_, ok := s.CheckLoggedIn(r)
@@ -75,7 +91,8 @@ func (s *Server) createArticle(w http.ResponseWriter, r *http.Request) {
 		http.Redirect(w, r, "/login", http.StatusFound)
 	} else {
 
-		s.loadCreateArticle(w, data)
+		err := s.templates.ExecuteTemplate(w, "create-article.html", nil)
+		CheckError("error loading create-articale page ", err)
 	}
 
 }
@@ -109,19 +126,13 @@ func (s *Server) createArticlePost(w http.ResponseWriter, r *http.Request) {
 
 }
 
-func (s *Server) loadCreateArticle(w http.ResponseWriter, data ArticleTempData) {
-	err := s.templates.ExecuteTemplate(w, "create-article.html", data)
-	CheckError("error loading create-articale page ", err)
-
-}
-
 //**************************************** update article handler **********************************************
 
 func (s *Server) updateArticleGet(w http.ResponseWriter, r *http.Request) {
 	var ID int32
 	var Uname string
 	var ok bool
-	data := ArticleTempData{}
+	data := UpdateArticleData{}
 
 	//get article from id
 	params := mux.Vars(r)
@@ -151,7 +162,7 @@ func (s *Server) updateArticleGet(w http.ResponseWriter, r *http.Request) {
 
 func (s *Server) updateArticlePost(w http.ResponseWriter, r *http.Request) {
 	fmt.Printf("update article post")
-	data := ArticleTempData{}
+	data := UpdateArticleData{}
 	article := storage.Articles{}
 
 	//****** check if logged in and user matches the author
@@ -189,6 +200,7 @@ func (s *Server) updateArticlePost(w http.ResponseWriter, r *http.Request) {
 
 }
 
+//**************************************** delete article handler **********************************************
 func (s *Server) deleteArticle(w http.ResponseWriter, r *http.Request) {
 	fmt.Println("Delete the article")
 	var article storage.Articles
