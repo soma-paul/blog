@@ -1,10 +1,10 @@
 package handler
 
 import (
-	"Blog/storage"
 	"fmt"
 	"log"
 	"net/http"
+	"practice/blog/article/storage"
 	"strconv"
 
 	"github.com/gorilla/sessions"

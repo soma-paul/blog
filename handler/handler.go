@@ -1,8 +1,8 @@
 package handler
 
 import (
-	"Blog/storage/postgres"
 	"net/http"
+	"practice/blog/article/storage/postgres"
 	"text/template"
 
 	"github.com/Masterminds/sprig"

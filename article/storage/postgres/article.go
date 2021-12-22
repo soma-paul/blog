@@ -1,9 +1,9 @@
 package postgres
 
 import (
-	"Blog/storage"
 	"fmt"
 	"log"
+	"practice/blog/article/storage"
 )
 
 const (

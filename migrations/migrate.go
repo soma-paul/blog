@@ -79,7 +79,7 @@ func newDBFromConfig() string {
 	//dbParams += " " + "host=localhost"
 	//dbParams += " " + "port=5435"
 	dbParams += " " + "dbname=blog"
-	dbParams += " " + "password=test123"
+	dbParams += " " + "password=password"
 	dbParams += " " + "sslmode=disable"
 
 	return dbParams

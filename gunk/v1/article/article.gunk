@@ -1,0 +1,14 @@
+package article // v1 ./gunk/v1/article
+
+type getArticleRequest struct {
+	ID int `pb:"1" json:"id"`
+}
+
+type getArticleResponse struct {
+	Title       string `pb:"1" json:"title"`
+	Description string `pb:"2" json:"description"`
+}
+
+type Article interface {
+	getArticle(getArticleRequest) getArticleResponse
+}

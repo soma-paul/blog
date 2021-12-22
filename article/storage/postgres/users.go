@@ -1,9 +1,10 @@
 package postgres
 
 import (
-	"Blog/storage"
+	"database/sql"
 	"fmt"
 	"log"
+	"practice/blog/article/storage"
 )
 
 const (
@@ -40,13 +41,13 @@ func (s *StoreDB) UserAuth(email string) (u storage.Users) {
 	return user
 }
 
-func (s *StoreDB) UniqueEmailUname(email string) (emailId int32, unameID int32) {
+func (s *StoreDB) UniqueEmailUname(email string, username string) (emailId int32, unameID int32) {
 	err := s.Db.Get(&emailId, getIdForEmail, email)
-	if err != nil {
+	if err != nil && err != sql.ErrNoRows {
 		log.Printf("error for getting row in finding uniqueness(email): %v", err)
 	}
 
-	err = s.Db.Get(&unameID, getIdForUname, email)
+	err = s.Db.Get(&unameID, getIdForUname, username)
 	if err != nil {
 		log.Printf("error for getting row in finding uniqueness(username): %v", err)
 

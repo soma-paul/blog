@@ -1,9 +1,9 @@
 package handler
 
 import (
-	"Blog/storage"
 	"fmt"
 	"net/http"
+	"practice/blog/article/storage"
 
 	"github.com/gorilla/mux"
 )

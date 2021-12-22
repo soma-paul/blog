@@ -3,26 +3,16 @@ package main
 import (
 	"net/http"
 
-	"Blog/handler"
-	"Blog/storage/postgres"
+	"practice/blog/article/storage/postgres"
+	"practice/blog/handler"
 
 	"github.com/gorilla/schema"
 	"github.com/gorilla/sessions"
 	_ "github.com/lib/pq"
 )
 
-func dbConfig() string {
-	dbParams := " " + "user=postgres"
-	dbParams += " " + "host=localhost"
-	dbParams += " " + "dbname=blog"
-	dbParams += " " + "password=test123"
-	dbParams += " " + "sslmode=disable"
-
-	return dbParams
-}
-
 func main() {
-	store, err := postgres.NewStorage(dbConfig()) //establish database connection
+	store, err := postgres.NewStorage(postgres.DbConfig()) //establish database connection
 	handler.CheckError("database connection problem: ", err)
 
 	decoder := schema.NewDecoder()

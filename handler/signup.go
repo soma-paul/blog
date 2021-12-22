@@ -1,9 +1,9 @@
 package handler
 
 import (
-	"Blog/storage"
 	"fmt"
 	"net/http"
+	"practice/blog/article/storage"
 
 	validation "github.com/go-ozzo/ozzo-validation"
 	"golang.org/x/crypto/bcrypt"
@@ -50,7 +50,7 @@ func (s *Server) signupPostHandler(w http.ResponseWriter, r *http.Request) {
 	data.FormValidate = make(map[string]string)
 
 	//check uniqueness of email and username
-	eID, uID := s.store.UniqueEmailUname(usr.Email)
+	eID, uID := s.store.UniqueEmailUname(usr.Email, usr.Username)
 	varErr := map[string]string{}
 
 	//validate data
@@ -69,6 +69,7 @@ func (s *Server) signupPostHandler(w http.ResponseWriter, r *http.Request) {
 			}
 
 		}
+		fmt.Println("##################printing error:", varErr)
 		if eID != 0 {
 			varErr["DuplicateEmail"] = "Sorry! Email address already in use"
 		}
