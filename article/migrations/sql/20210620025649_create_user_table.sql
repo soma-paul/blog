@@ -10,8 +10,8 @@ CREATE TABLE IF NOT EXISTS users
     password   varchar(255)       not null,
     is_active  boolean     default true,
     is_admin   boolean     default false,
-    created_at timestamp default current_timestamp,
-    updated_at  timestamp default current_timestamp,
+    created_at timestamp,
+    updated_at  timestamp,
 
     PRIMARY KEY (id)
 );

@@ -1,0 +1,41 @@
+package user // v1 ./gunk/v1/user
+
+import(
+	"time"
+)
+
+type Users struct {
+	ID        int32     `pb:"1" json:"id"`
+	FirstName string    `pb:"2" json:"first_name"`
+	LastName  string    `pb:"3" json:"last_name"`
+	Username  string    `pb:"4" json:"username"`
+	Email     string    `pb:"5" json:"email"`
+	Password  string    `pb:"6" json:"pasword"`
+	IsActive  bool      `pb:"7" json:"is_active"`
+	IsAdmin   bool      `pb:"8" json:"is_admin"`
+	CreatedAt time.Time `pb:"9" json:"created_at"`
+	UpdatedAt time.Time `pb:"10" json:"updated_at"`
+}
+
+type SignupUser struct {
+	FirstName string `pb:"1" json:"first_name"`
+	LastName  string `pb:"2" json:"last_name"`
+	Username  string `pb:"3" json:"username"`
+	Email     string `pb:"4" json:"email"`
+	Password  string `pb:"5" json:"pasword"`
+}
+
+
+
+type CreateUserRequest struct{
+	SignupUser SignupUser `pb:"1" json:"article"`
+}
+
+type CreateUserResponse struct{
+	ID int32 `pb:"1" json:"id"`
+}
+
+
+type User interface {
+	CreateUser(CreateUserRequest) CreateUserResponse
+}

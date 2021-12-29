@@ -6,13 +6,13 @@ CREATE TABLE IF NOT EXISTS articles(
     description text                        not null,
     uid         int REFERENCES users(id)    not null,
     username    varchar(30)                 not null,
-    created_at  timestamp       default     current_timestamp,
-    updated_at  timestamp       default     current_timestamp
+    created_at  timestamp ,      
+    updated_at  timestamp
 
 );
 -- +goose StatementEnd
 
 -- +goose Down
 -- +goose StatementBegin
-DROP TABLE IF EXISTS users;
+DROP TABLE IF EXISTS articles;
 -- +goose StatementEnd

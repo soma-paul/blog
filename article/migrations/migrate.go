@@ -12,10 +12,12 @@ import (
 
 var (
 	flags = flag.NewFlagSet("goose", flag.ExitOnError)
-	dir   = flags.String("dir", "./migrations/sql", "directory with migration files")
+	dir   = flags.String("dir", "./article/migrations/sql", "directory with migration files")
 )
 
 func main() {
+	//configPath := flag.String("config", "env/config", "config file")
+
 	flags.Usage = usage
 	_ = flags.Parse(os.Args[1:])
 

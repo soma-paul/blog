@@ -5,22 +5,17 @@ import (
 	"log"
 	"net/http"
 	"practice/blog/article/storage"
-	"strconv"
 
 	"github.com/gorilla/sessions"
 )
 
-func ConvertStringtoInt(s string) int {
-	integerValue, err := strconv.Atoi(s)
-	CheckError("error converting a string to integer", err)
-	return integerValue
-}
-
-func CheckError(msg string, err error) {
-	if err != nil {
-		log.Fatal(msg, err.Error())
-	}
-}
+// func ConvertStringtoInt(s string) int {
+// 	integerValue, err := strconv.Atoi(s)
+// 	if err != nil {
+// 		log.Print("error converting a string to integer", err)
+// 	}
+// 	return integerValue
+// }
 
 func (s *Server) CheckLoggedIn(r *http.Request) (string, bool) {
 	var Uname string
@@ -28,18 +23,22 @@ func (s *Server) CheckLoggedIn(r *http.Request) (string, bool) {
 	session := s.GetSession(r)
 	if len(session.Values) > 0 {
 
-		if username := session.Values["user_name"]; username != nil {
+		if username, ok := session.Values["user_name"]; ok {
 			Uname = username.(string)
-			LoggedIn = session.Values["logged_in"].(bool)
+		}
+		if login, ok := session.Values["logged_in"]; ok {
+			LoggedIn = login.(bool)
 		}
 	}
-	fmt.Printf("username common: %v, loggedIn: %v", Uname, LoggedIn)
+	fmt.Printf("username : %v, loggedIn: %v", Uname, LoggedIn)
 	return Uname, LoggedIn
 }
 
 func (s *Server) GetSession(r *http.Request) *sessions.Session {
 	session, err := s.session.Get(r, "user-session")
-	CheckError("error getting session: ", err)
+	if err != nil {
+		log.Println("error getting session: ", err)
+	}
 	return session
 }
 

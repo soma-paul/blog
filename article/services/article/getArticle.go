@@ -10,11 +10,11 @@ func (s *Svc) GetArticle(ctx context.Context, req *apb.GetArticleRequest) (*apb.
 	//validation if needed
 	id := int32(req.GetID())
 	article, err := s.core.Get(ctx, id)
+	a := StorageToProto(article)
 	if err != nil {
 		log.Println("error getting to core.Get()")
 	}
 	return &apb.GetArticleResponse{
-		Title:       article.Title,
-		Description: article.Description,
+		Article: a,
 	}, nil
 }

@@ -47,8 +47,9 @@ func (s *Server) loginGetHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	err := s.loadLogin(w, data)
-	CheckError("error loding get log in form ", err)
-
+	if err != nil {
+		log.Println("error loding get log in form ", err)
+	}
 }
 
 func (s *Server) loginPostHandler(w http.ResponseWriter, r *http.Request) {
@@ -56,8 +57,9 @@ func (s *Server) loginPostHandler(w http.ResponseWriter, r *http.Request) {
 	var data LoginTempData
 	r.ParseForm()
 	err := s.decoder.Decode(&usrForm, r.PostForm)
-	CheckError("error decoding log in form: ", err)
-
+	if err != nil {
+		log.Println("error decoding log in form: ", err)
+	}
 	//**********************Validate Login Form********************************************
 	data.UserAuth = map[string]string{}    //initializing map
 	data.UserAuth = ValidateLogin(usrForm) //validating log in form
@@ -83,8 +85,9 @@ func (s *Server) loginPostHandler(w http.ResponseWriter, r *http.Request) {
 	if len(data.UserAuth) == 0 {
 		//create session
 		err = s.CreateSession(w, r, userDB)
-		CheckError("error creating and saving session. ", err)
-
+		if err != nil {
+			log.Println("error creating and saving session. ", err)
+		}
 		//redirect to homepage if logged in successfully
 		http.Redirect(w, r, "/", http.StatusFound)
 
@@ -95,8 +98,9 @@ func (s *Server) loginPostHandler(w http.ResponseWriter, r *http.Request) {
 	data.User = usrForm
 
 	err = s.loadLogin(w, data)
-	CheckError("error loading post log in form ", err)
-
+	if err != nil {
+		log.Println("error loading post log in form ", err)
+	}
 }
 
 func (s *Server) loadLogin(w http.ResponseWriter, data LoginTempData) error {
@@ -106,7 +110,8 @@ func (s *Server) loadLogin(w http.ResponseWriter, data LoginTempData) error {
 
 func (s *Server) logOut(w http.ResponseWriter, r *http.Request) {
 	err := s.DeleteSession(w, r)
-	CheckError("Error for saving session after deleting values ", err)
-
+	if err != nil {
+		log.Println("Error for saving session after deleting values ", err)
+	}
 	http.Redirect(w, r, "/login", http.StatusTemporaryRedirect)
 }

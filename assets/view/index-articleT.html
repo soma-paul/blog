@@ -13,6 +13,14 @@
     <section class="w-full text-gray-600 overflow-hidden font-serif">
         <div class=" container mx-auto px-4">
             <div class="row -ml-4  px-4 pt-8">
+                <div >
+                    <div class="inline-block px-4 py-2 bg-blue-100 mr-4 rounded ">
+                        <img class="inline-block rounded-3xl" height="40px" width="40px"  src="/static/view/images/home-icon.jpg" alt="home-icon">
+                        <a class=""href="/">Home</a>
+                    </div>
+                    
+                    <a class="p-4 bg-blue-100  rounded"href="/show-article">All Articles</a>
+                </div>
                 <div class=" ml-auto">
                     <div class="inline-block px-4">
                         {{if ne .LoggedUsername ""}}
@@ -24,7 +32,6 @@
                     </div>
                     <div class="inline-block">
                         {{if .CheckAuthor}}
-<!--only show this button only for those who matches the author/ cretatedBy and the username from session-->
                         <form class="inline-block" action="/update-article/{{.Article.ID}}" method="GET">
                             <input class="p-1 border rounded-md bg-blue-200" type="submit" value="Update">
                         </form>
@@ -38,28 +45,19 @@
             <div class="row -ml-4">
                 <div class="w-full sm:my-8 mb-4 min-h-screen font-serif bg-gray-50 border-2 rounded-md">
                     <div class="pt-4 pb-2 px-8 font-bold text-3xl">
-                        {{.Article.Title}}
+                        {{with .Article.Title}}
+                            {{.}}
+                        {{end}}
                     </div>
                     <div class="pl-8 inline-block">
-                        created-by: {{.Article.Author}}
+                        created-by: {{with .Article.Author}} {{.}} {{end}}
                     </div>
-                    <div class="px-2 inline-block">
-                        created-at: {{date "Mon, Jan 02, 2006" .Article.CreatedAt}}
+                    <div class="px-2 inline-block">{{with .Article.CreatedAt}}
+                        created-at: {{date "Mon, Jan 02, 2006" .}} {{end}}
                     </div>
                     <div class="text-lg leading-relaxed  font-light tracking-normal pt-8 px-8">
-                        {{.Article.Description}}
-                        paragraph. article content. A hillock or knoll is a small hill,[1] usually separated from a larger group of hills such as a range.
-                        Hillocks are similar in their distribution and size to small mesas or buttes. The term is largely a British one.
-                        [citation needed] This particular formation occurs often in Great Britain and China.
-                        [clarification needed] A similar type of landform in the Scandinavian countries[which?] goes by the name ”kulle” or ”bakke” (depending on the country) 
-                        and is contrary to the above phenomena formed when glaciers polish down hard, crystalline bedrock of gneiss or granites,
-                         leaving a rounded rocky hillock with sparse vegetation.[2]
-                        One of the most famous knolls is the one near John F. Kennedy's point of assassination,
-                         the grassy knoll, in Dallas, Texas.
-                        
-                        A "blind knoll" is either hidden or not readily apparent to those driving 
-                        vehicles. There are road signs that warn of this, advising drivers to slow
-                         down. 
+                        {{with .Article.Description}} {{.}} {{end}}
+                       
                     </div>
 
                 </div>

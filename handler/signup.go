@@ -2,6 +2,7 @@ package handler
 
 import (
 	"fmt"
+	"log"
 	"net/http"
 	"practice/blog/article/storage"
 
@@ -39,17 +40,21 @@ func (s *Server) signupPostHandler(w http.ResponseWriter, r *http.Request) {
 	s.decoder.IgnoreUnknownKeys(true)
 
 	err := r.ParseForm()
-	CheckError("form parsing error:", err)
+	if err != nil {
+		log.Println("form parsing error:", err)
+	}
 
 	//decoded form value into usr stuct
 	err = s.decoder.Decode(&usr, r.PostForm)
-	CheckError("error decoding schema from sign up user: ", err)
-
-	//fmt.Printf("user check before assigning to formdata: %v", usr)
+	if err != nil {
+		log.Println("error decoding schema from sign up user: ", err)
+	}
+	fmt.Printf("user check before assigning to formdata: %#v", usr)
 
 	data.FormValidate = make(map[string]string)
 
 	//check uniqueness of email and username
+	fmt.Printf("****************printing db store: %#v", s.store)
 	eID, uID := s.store.UniqueEmailUname(usr.Email, usr.Username)
 	varErr := map[string]string{}
 
@@ -65,9 +70,7 @@ func (s *Server) signupPostHandler(w http.ResponseWriter, r *http.Request) {
 				for key, value := range e {
 					varErr[key] = value.Error()
 				}
-
 			}
-
 		}
 		fmt.Println("##################printing error:", varErr)
 		if eID != 0 {
@@ -82,14 +85,18 @@ func (s *Server) signupPostHandler(w http.ResponseWriter, r *http.Request) {
 	} else {
 		//hash the password
 		hash, er := bcrypt.GenerateFromPassword([]byte(usr.Password), 10)
-		CheckError("error generating hash ", er)
+		if er != nil {
+			log.Println("error generating hash ", er)
+		}
 		hashString := string(hash)
 		usr.Password = hashString //save hashed password in string type
 
 		//save user to the
 		var id int32
-		er, id = s.store.CreateUser(usr) //store the user in users table
-		CheckError("error executing query for creating an user: ", err)
+		id, er = s.store.CreateUser(usr) //store the user in users table
+		if er != nil {
+			log.Println("error executing query for creating an user: ", err)
+		}
 		fmt.Println("returned id: ", id)
 
 		data = UserTempData{} //clear the data if post is done successfully.
@@ -105,5 +112,7 @@ func (s *Server) signupPostHandler(w http.ResponseWriter, r *http.Request) {
 
 func (s *Server) loadTemplate(w http.ResponseWriter, r *http.Request, data UserTempData) {
 	err := s.templates.ExecuteTemplate(w, "signupT.html", data)
-	CheckError("error parsing signup.html: ", err)
+	if err != nil {
+		log.Println("error parsing signup.html: ", err)
+	}
 }

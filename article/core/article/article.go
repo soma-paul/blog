@@ -1,13 +1,15 @@
 package article
 
 import (
-	"context"
-	"fmt"
 	"practice/blog/article/storage"
 )
 
 type articleStore interface {
-	GetIndexedArticle(id int32) (storage.Articles, error)
+	GetIndexedArticle(id int32) (*storage.Articles, error)
+	ShowAllArticles() ([]*storage.Articles, error)
+	CreateArticle(data storage.Articles) (int32, error)
+	UpdateIndexedArticle(data storage.Articles) error
+	DeleteArticleByID(id int32) error
 }
 
 type CoreSvc struct {
@@ -16,12 +18,4 @@ type CoreSvc struct {
 
 func NewCoreSvc(astr articleStore) *CoreSvc {
 	return &CoreSvc{astr}
-}
-func (svc *CoreSvc) Get(ctx context.Context, id int32) (storage.Articles, error) {
-	fmt.Println("dkrjgkd", id)
-	article, err := svc.artStr.GetIndexedArticle(id)
-	if err != nil {
-
-	}
-	return article, err
 }

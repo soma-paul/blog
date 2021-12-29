@@ -1,14 +1,64 @@
 package article // v1 ./gunk/v1/article
 
+import(
+	"time"
+)
+
+type Articles struct {
+	ID          int       `pb:"1" json:"id"`
+	Title       string    `pb:"2" json:"title"`
+	Description string    `pb:"3" json:"description"`
+	Author      string    `pb:"4" json:"author"`
+	UserID      int       `pb:"5" json:"user_id"`
+	CreatedAt   time.Time `pb:"6" json:"created_at"`
+	UpdatedAt   time.Time `pb:"7" json:"updated_at"`
+}
+
 type getArticleRequest struct {
 	ID int `pb:"1" json:"id"`
 }
 
 type getArticleResponse struct {
-	Title       string `pb:"1" json:"title"`
-	Description string `pb:"2" json:"description"`
+	Article Articles `pb:"1" json:"article"`
+}
+
+type GetAllArticleRequest struct{
+
+}
+
+type GetAllArticleResponse struct{
+	Articles []Articles `pb:"1" json:"articles"`
+}
+
+type CreateArticleRequest struct{
+	Article Articles `pb:"1" json:"article"`
+
+}
+
+type CreateArticleResponse struct{
+	ID int `pb:"1" json:"id"`
+}
+
+type UpdateArticleRequest struct{
+	Article Articles `pb:"1" json:"article"`
+}
+
+type UpdateArticleResponse struct{
+
+}
+
+type DeleteArticleRequest struct{
+	ID int `pb:"1" json:"id"`
+}
+
+type DeleteArticleResponse struct{
+	ID int `pb:"1" json:"id"`
 }
 
 type Article interface {
 	getArticle(getArticleRequest) getArticleResponse
+	GetAllArticles(GetAllArticleRequest) GetAllArticleResponse
+	CreateArticle(CreateArticleRequest) CreateArticleResponse
+	UpdateArticle(UpdateArticleRequest) UpdateArticleResponse
+	DeleteArticle(DeleteArticleRequest) DeleteArticleResponse
 }
