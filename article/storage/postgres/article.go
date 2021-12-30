@@ -26,9 +26,12 @@ func (s *StoreDB) CreateArticle(data storage.Articles) (int32, error) {
 func (s *StoreDB) ShowAllArticles() ([]*storage.Articles, error) {
 	var articles []*storage.Articles
 	err := s.Db.Select(&articles, getAllArticles)
-	fmt.Printf("printing all articles: %#v", articles[0].CreatedAt)
+	if err != nil {
+		log.Fatalf("error getting all articles, %v", err)
+		return nil, err
+	}
 
-	return articles, err
+	return articles, nil
 
 }
 
@@ -37,20 +40,38 @@ func (s *StoreDB) GetIndexedArticle(id int32) (*storage.Articles, error) {
 	var article storage.Articles
 	err := s.Db.Get(&article, getAnArticle, id)
 	if err != nil {
+		log.Printf("########### error getting an article from list: %v ", err)
 		return nil, err
 	}
 	return &article, nil
 }
 
-func (s *StoreDB) UpdateIndexedArticle(data storage.Articles) error {
-	const UpdateAnArticle = `UPDATE articles SET title=:title, description=:description, updated_at=now() WHERE id=:id`
-	result, err := s.Db.NamedExec(UpdateAnArticle, data)
-	fmt.Printf("prinint db updating result: %T %+v", result, result)
-	return err
+func (s *StoreDB) UpdateIndexedArticle(data storage.Articles) (storage.Articles, error) {
+	const UpdateAnArticle = `UPDATE articles SET title=:title, description=:description, updated_at=now() WHERE id=:id  Returning *`
+	var article storage.Articles
+	stmnt, err := s.Db.PrepareNamed(UpdateAnArticle)
+	if err != nil {
+		log.Fatalf("error making named statement for creating article %v", err)
+	}
+	err = stmnt.Get(&article, data)
+	fmt.Printf("prinint db updating result: %T %+v", article, article)
+	if err != nil {
+		log.Printf("error updating article, %v", err)
+		return storage.Articles{}, err
+
+	}
+	return article, nil
 }
 
 func (s *StoreDB) DeleteArticleByID(id int32) error {
 	const DeleteAnArticle = `DELETE FROM articles WHERE id=$1`
-	_, err := s.Db.Query(DeleteAnArticle, id)
-	return err
+
+	_, err := s.Db.Exec(DeleteAnArticle, id)
+	log.Printf("error=%v", err)
+
+	if err != nil {
+		log.Printf("error deleting article with ID %v error=%v", id, err)
+		return err
+	}
+	return nil
 }

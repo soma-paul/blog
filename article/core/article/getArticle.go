@@ -21,6 +21,7 @@ func (svc *CoreSvc) GetAll(ctx context.Context) ([]*storage.Articles, error) {
 	Articles, err := svc.artStr.ShowAllArticles()
 	if err != nil {
 		log.Fatal("error creating article: ", err)
+		return nil, err
 	}
 	return Articles, nil
 
@@ -36,7 +37,7 @@ func (svc *CoreSvc) CreateArticle(ctx context.Context, article storage.Articles)
 }
 func (svc *CoreSvc) Update(ctx context.Context, article storage.Articles) error {
 	fmt.Println("article.core.GetAll()")
-	err := svc.artStr.UpdateIndexedArticle(article)
+	_, err := svc.artStr.UpdateIndexedArticle(article)
 	if err != nil {
 		log.Fatal("error updating article: ", err)
 
