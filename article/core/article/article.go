@@ -9,7 +9,7 @@ type articleStore interface {
 	ShowAllArticles() ([]*storage.Articles, error)
 	CreateArticle(data storage.Articles) (int32, error)
 	UpdateIndexedArticle(data storage.Articles) (storage.Articles, error)
-	DeleteArticleByID(id int32) error
+	DeleteArticleByID(id int32) (storage.Articles, error)
 }
 
 type CoreSvc struct {

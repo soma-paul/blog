@@ -6,10 +6,6 @@ import (
 	"practice/blog/article/storage"
 )
 
-const (
-	getAllArticles = `SELECT id,title, description, uid,username, created_at FROM articles`
-)
-
 func (s *StoreDB) CreateArticle(data storage.Articles) (int32, error) {
 	const createAnArticle = `INSERT INTO articles VALUES(DEFAULT, :title, :description,  :uid, :username, now(), now())
 	RETURNING id`
@@ -24,6 +20,7 @@ func (s *StoreDB) CreateArticle(data storage.Articles) (int32, error) {
 }
 
 func (s *StoreDB) ShowAllArticles() ([]*storage.Articles, error) {
+	const getAllArticles = `SELECT id,title, description, uid,username, created_at FROM articles`
 	var articles []*storage.Articles
 	err := s.Db.Select(&articles, getAllArticles)
 	if err != nil {
@@ -40,7 +37,7 @@ func (s *StoreDB) GetIndexedArticle(id int32) (*storage.Articles, error) {
 	var article storage.Articles
 	err := s.Db.Get(&article, getAnArticle, id)
 	if err != nil {
-		log.Printf("########### error getting an article from list: %v ", err)
+		log.Printf("error getting an article from list: %v ", err)
 		return nil, err
 	}
 	return &article, nil
@@ -63,15 +60,13 @@ func (s *StoreDB) UpdateIndexedArticle(data storage.Articles) (storage.Articles,
 	return article, nil
 }
 
-func (s *StoreDB) DeleteArticleByID(id int32) error {
-	const DeleteAnArticle = `DELETE FROM articles WHERE id=$1`
-
-	_, err := s.Db.Exec(DeleteAnArticle, id)
-	log.Printf("error=%v", err)
-
+func (s *StoreDB) DeleteArticleByID(id int32) (storage.Articles, error) {
+	const DeleteAnArticle = `DELETE FROM articles WHERE id=$1 RETURNING *`
+	var article storage.Articles
+	err := s.Db.Get(&article, DeleteAnArticle, id)
 	if err != nil {
 		log.Printf("error deleting article with ID %v error=%v", id, err)
-		return err
+		return storage.Articles{}, err
 	}
-	return nil
+	return article, nil
 }

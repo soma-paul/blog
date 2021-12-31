@@ -47,7 +47,7 @@ func (svc *CoreSvc) Update(ctx context.Context, article storage.Articles) error 
 
 func (svc *CoreSvc) Delete(ctx context.Context, id int32) error {
 	fmt.Println("article.core.GetAll()")
-	err := svc.artStr.DeleteArticleByID(id)
+	_, err := svc.artStr.DeleteArticleByID(id)
 	if err != nil {
 		log.Println("error deleting the article,  ", err)
 	}

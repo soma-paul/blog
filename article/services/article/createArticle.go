@@ -11,10 +11,7 @@ import (
 func (s *Svc) CreateArticle(ctx context.Context, req *apb.CreateArticleRequest) (*apb.CreateArticleResponse, error) {
 	//validation if needed
 
-	fmt.Printf("printing req before protoToStorage(): %#v", req.Article)
 	ppfs := ProtoToStorage(req.Article)
-	fmt.Printf("printing req after protoToStorage(): %#v", ppfs)
-
 	id, err := s.core.CreateArticle(context.Background(), ppfs)
 	if err != nil {
 		fmt.Println("error getting to core.CreateArticle()")

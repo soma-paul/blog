@@ -226,3 +226,48 @@ func TestUpdateArticle(t *testing.T) {
 		})
 	}
 }
+
+func TestDeleteArticle(t *testing.T) {
+
+	s := newTestStorage(t)
+
+	tests := []struct {
+		name    string
+		in      int32
+		want    storage.Articles
+		wantErr bool
+	}{
+		{
+			name: "Delete_Article_SUCCESS",
+			in:   2,
+			want: storage.Articles{
+				ID:          2,
+				Title:       "this is title2",
+				Description: "this is description2",
+				Author:      "soma2",
+				UserID:      1,
+			},
+		},
+		{
+			name:    "Delete_Article_FAILED",
+			in:      100,
+			wantErr: true,
+		},
+	}
+	for _, tt := range tests {
+		tt := tt
+		t.Run(tt.name, func(t *testing.T) {
+
+			got, err := s.DeleteArticleByID(tt.in)
+			if (err != nil) != tt.wantErr {
+				t.Errorf("Storage.DeleteArticleByID() error = %v, wantErr %v", err, tt.wantErr)
+				return
+			}
+			ignoreOpt := cmpopts.IgnoreFields(storage.Articles{}, "CreatedAt", "UpdatedAt")
+			if !cmp.Equal(got, tt.want, ignoreOpt) {
+				t.Errorf("Diff: got -, want += %v", cmp.Diff(got, tt.want, ignoreOpt))
+			}
+
+		})
+	}
+}
