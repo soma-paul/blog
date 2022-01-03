@@ -91,12 +91,14 @@ func (s *Server) showArticleByID(w http.ResponseWriter, r *http.Request) {
 		log.Println("error getting the article by ID ", err)
 	}
 
+	// res.Article.CreatedAt =
 	data := ShowArticleByIdData{
 		Article: storage.Articles{
+			ID:          ID,
 			Title:       res.Article.Title,
 			Description: res.Article.Description,
 			Author:      res.Article.Author,
-			ID:          ID,
+			CreatedAt:   res.Article.CreatedAt.AsTime(),
 		},
 		LoggedUsername: "",
 		CheckAuthor:    false,

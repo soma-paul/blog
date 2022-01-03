@@ -119,8 +119,8 @@ func ProtoToStorsge(spf *apb.Articles) *storage.Articles {
 		Description: spf.Description,
 		Author:      spf.Author,
 		UserID:      spf.UserID,
-		CreatedAt:   time.Time{},
-		UpdatedAt:   time.Time{},
+		CreatedAt:   spf.CreatedAt.AsTime(),
+		UpdatedAt:   spf.CreatedAt.AsTime(),
 	}
 	return ppf
 }

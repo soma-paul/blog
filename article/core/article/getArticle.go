@@ -13,6 +13,7 @@ func (svc *CoreSvc) Get(ctx context.Context, id int32) (*storage.Articles, error
 	if err != nil {
 		log.Println("error getting article by id, srticle.core.Get()")
 	}
+
 	return article, err
 }
 
